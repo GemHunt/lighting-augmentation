@@ -28,6 +28,7 @@ void loop() {
   int on_pixel;
   int off_pixel;
   int num_pixels_on = 2;
+  //This leaves 2 pixels on at all times:
   for(int i=0;i < NUMPIXELS;i++){
     on_pixel = i;
     off_pixel = i - num_pixels_on;
@@ -43,11 +44,11 @@ void loop() {
     if (off_pixel > NUMPIXELS){
       off_pixel -= NUMPIXELS;
     }
-    pixels.setPixelColor(on_pixel, pixels.Color(255,255,255)); // Moderately bright green color.
-    pixels.show(); // This sends the updated pixel color to the hardware.
-    pixels.setPixelColor(off_pixel, pixels.Color(0,0,0)); // Moderately bright green color.
-    pixels.show(); // This sends the updated pixel color to the hardware.
-    delay(delayval); // Delay for a period of time (in milliseconds).
+    pixels.setPixelColor(on_pixel, pixels.Color(255,255,255));
+    pixels.show();
+    pixels.setPixelColor(off_pixel, pixels.Color(0,0,0));
+    pixels.show();
+    delay(delayval);
   }
 }
 
