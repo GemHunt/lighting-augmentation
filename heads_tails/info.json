@@ -1,0 +1,26 @@
+{
+    "caffe flavor": "NVIDIA",
+    "caffe version": "0.15.14",
+    "creation time": "2017-05-08 12:12:51.263891",
+    "dataset_id": "20170508-121220-c233",
+    "deploy file": "deploy.prototxt",
+    "digits version": "5.1-dev",
+    "framework": "caffe",
+    "id": "20170508-121251-7061",
+    "image dimensions": [
+        28,
+        28,
+        1
+    ],
+    "image resize mode": "squash",
+    "job id": "20170508-121251-7061",
+    "labels file": "labels.txt",
+    "mean file": "mean.binaryproto",
+    "model file": "original.prototxt",
+    "name": "cent-designs4",
+    "snapshot file": "snapshot_iter_3960.caffemodel",
+    "solver file": "solver.prototxt",
+    "status": "Done",
+    "train_val file": "train_val.prototxt",
+    "username": "pkrush"
+}
