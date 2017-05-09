@@ -1,11 +1,11 @@
-import cPickle as pickle
-import cv2
-import os
-import numpy as np
-import sys
-import shutil
 import glob
+import numpy as np
+import os
 import random
+import sys
+
+import cv2
+
 
 def get_rotated_image(image,before_rotate_size,angle, pixels_to_jitter):
     center_x = before_rotate_size / 2 + (random.random() * pixels_to_jitter * 2) - pixels_to_jitter
@@ -18,16 +18,17 @@ def get_rotated_image(image,before_rotate_size,angle, pixels_to_jitter):
     rot_image = rot_image[6:34, 6:34]
     return rot_image
 
-def create_data_set(crop_dir,new_crop_dir,before_rotate_size,total_coins,crop):
+
+def create_data_set(large_crop_dir, small_crop_dir, before_rotate_size, total_coins, crop):
     image_ids = []
     coins_ids = set()
 
-    for root, dirnames, walk_filenames in os.walk(crop_dir):
+    for root, dirnames, walk_filenames in os.walk(large_crop_dir):
         for filename in walk_filenames:
             if filename.endswith('.png'):
                 image_id = int(filename.replace('.png', ''))
                 image_ids.append([image_id, root , filename])
-    print 'Total images in ' + crop_dir + ': ' + len(image_ids)
+    print 'Total images in ' + large_crop_dir + ': ' + len(image_ids)
 
     image_ids = sorted(image_ids)
 
@@ -43,7 +44,7 @@ def create_data_set(crop_dir,new_crop_dir,before_rotate_size,total_coins,crop):
                     image = get_rotated_image(image, before_rotate_size, angle = 0, pixels_to_jitter = 0)
                 else:
                     image = cv2.resize(image, (before_rotate_size, before_rotate_size), interpolation=cv2.INTER_AREA)
-                cv2.imwrite(new_crop_dir + filename,image)
+                cv2.imwrite(small_crop_dir + filename, image)
 
 
 def create_design_data_set(labeled_designs,design_crop_dir,image_dir,test):
@@ -76,25 +77,24 @@ def create_design_data_set(labeled_designs,design_crop_dir,image_dir,test):
                 cv2.imwrite(class_dir + rotated_filename,rot_image)
     sys.exit()
 
-def label_heads_tails():
+
+def label_heads_tails(small_crop_dir, labeled_crop_dir):
     cv2.namedWindow("next")
     coin_ids = []
     filenames = []
     images = {}
     labeled_designs = {}
 
-    design_crop_dir = '/home/pkrush/data/cents-test/3/'
-    image_dir = '/home/pkrush/cent-designs4/'
     test= False
 
-    for filename in glob.iglob(design_crop_dir + '*54.png'):
+    for filename in glob.iglob(small_crop_dir + '*54.png'):
         filenames.append([random.random(), filename])
         filenames.sort()
     print coin_ids
 
     for temp_random,filename in filenames:
         coin_id = filename.replace('54.png', '')
-        coin_id = int(coin_id.replace(design_crop_dir, ''))
+        coin_id = int(coin_id.replace(small_crop_dir, ''))
         coin_ids.append([coin_id,filename])
 
     for coin_id, filename in coin_ids:
@@ -130,9 +130,7 @@ def label_heads_tails():
             cv2.imshow("next", next)
 
             key = cv2.waitKey(1) & 0xFF
-            if key !=255:
-                print key
-
+            
             if key == ord("h"):
                 labeled_designs[coin_id] = 'heads'
                 break
@@ -141,20 +139,19 @@ def label_heads_tails():
                 break
             if key == 27: #esc
                 break
-
             if key == ord("q"):
-                create_design_data_set(labeled_designs,design_crop_dir,image_dir,test)
+                create_design_data_set(labeled_designs, small_crop_dir, labeled_crop_dir, test)
 
-    create_design_data_set(labeled_designs,design_crop_dir,image_dir,test)
+    create_design_data_set(labeled_designs, small_crop_dir, labeled_crop_dir, test)
     cv2.destroyAllWindows()
 
 before_rotate_size = 56
-crop_dir = '/home/pkrush/data/cents-test/'
-new_crop_dir = '/home/pkrush/cents/'
+large_crop_dir = '/home/pkrush/data/cents-test/'
+small_crop_dir = '/home/pkrush/cents/'
 crop_crop_dir = '/home/pkrush/cents-cropped/'
-
+labeled_crop_dir = '/home/pkrush/cents-labeled/'
 
 #total_coins is 1002 because 2 are missing images:
-#create_data_set(crop_dir,new_crop_dir,before_rotate_size,total_coins=1002,crop=False)
-#create_data_set(new_crop_dir,crop_crop_dir,before_rotate_size,total_coins=1000,crop=True)
-#label_heads_tails()
+# create_data_set(large_crop_dir,small_crop_dir,before_rotate_size,total_coins=1002,crop=False)
+# create_data_set(small_crop_dir,crop_crop_dir,before_rotate_size,total_coins=1000,crop=True)
+label_heads_tails(small_crop_dir, labeled_crop_dir)

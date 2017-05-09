@@ -1,7 +1,8 @@
 import numpy as np
-import sys
-import cv2
 import os
+import sys
+
+import cv2
 
 sys.path.append('/home/pkrush/caffe/python')
 import caffe
@@ -22,13 +23,12 @@ def get_classifier(model_name, crop_size):
     print mean_arr.shape
 
     net = caffe.Classifier(MODEL_FILE, PRETRAINED, image_dims=(crop_size, crop_size), mean=mean_arr, raw_scale=255)
-    return net;
-
+    return net
 
 def get_labels(model_name):
     labels_file = model_name + '/labels.txt'
     labels = [line.rstrip('\n') for line in open(labels_file)]
-    return labels;
+    return labels
 
 
 def get_caffe_image(crop, crop_size):
@@ -39,7 +39,7 @@ def get_caffe_image(crop, crop_size):
     caffe_image = caffe_image.astype(np.float32) / 255
     caffe_image = np.array(caffe_image).reshape(crop_size, crop_size, 1)
     # Caffe wants a list so []:
-    return [caffe_image];
+    return [caffe_image]
 
 
 def get_composite_image(images, rows, cols):
@@ -63,37 +63,44 @@ heads_tails = get_classifier("heads_tails", crop_size)
 heads_tails_labels = get_labels('heads_tails')
 count = 0
 
-# design_crop_dir = '/home/pkrush/data/cents-test/5/'
-design_crop_dir = '/home/pkrush/cent-designs3'
+small_crop_dir = '/home/pkrush/cents/'
+crop_crop_dir = '/home/pkrush/cents-cropped/'
+labeled_crop_dir = '/home/pkrush/cents-labeled/'
+
 
 image_ids = []
 
-for root, dirnames, walk_filenames in os.walk(design_crop_dir):
+for root, dirnames, walk_filenames in os.walk(crop_crop_dir):
     for filename in walk_filenames:
         if filename.endswith('.png'):
-            image_id = int(filename.replace('.png', '')) / 100
-            image_ids.append([image_id, root + '/' + filename])
+            image_id = int(filename.replace('.png', ''))
+            image_ids.append([image_id, root, filename])
 
 image_ids = sorted(image_ids)
 coin_scores = {}
 thumbnails = {}
 
-for image_id, filename in image_ids:
+for image_id, root, filename in image_ids:
     coin_id = image_id / 100
-    crop = cv2.imread(filename)
+    crop = cv2.imread(root + '/' + filename)
     if crop is None:
         continue
     if image_id % 100 == 54:
-        thumbnails[coin_id] = crop.copy()
+        thumbnail_filename = small_crop_dir + filename
+        thumbnail = cv2.imread(thumbnail_filename)
+        if thumbnail is not None:
+            thumbnails[coin_id] = thumbnail
     crop = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
     score = heads_tails.predict(get_caffe_image(crop, crop_size), oversample=False)
     if coin_id in coin_scores.iterkeys():
         coin_scores[coin_id] = coin_scores[coin_id] + score
     else:
         coin_scores[coin_id] = score
+
     coin_type = heads_tails_labels[np.argmax(score)]
     max_value = np.amax(score)
-    # print image_id, coin_type, score, max_value
+
+    print image_id, coin_type, score, max_value
 
 results = []
 
@@ -108,19 +115,23 @@ results = sorted(results, key=lambda result: result[1], reverse=True)
 images = []
 
 for coin_id, coin_type, max_value in results:
+    if coin_id not in thumbnails.iterkeys():
+        print coin_id, 'coin_id not in thumbnails.iterkeys():'
+        continue
     crop = thumbnails[coin_id]
-    #font = cv2.FONT_HERSHEY_SIMPLEX
-    #cv2.putText(crop, str(max_value)[0:5], (4, 20), font, .7, (0, 255, 0), 2)
-    #cv2.putText(crop, str(coin_type), (4, 90), font, .7, (0, 255, 0), 2)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    cv2.putText(crop, str(max_value)[0:2], (4, 15), font, .5, (0, 200, 0), 2)
+    # cv2.putText(crop, str(coin_id), (4, 40), font, .4, (0, 255, 0), 2)
     images.append(crop)
 
-composite = get_composite_image(images, 10, 10)
-cv2.namedWindow("results")
+composite = get_composite_image(images, 50, 20)
+# cv2.namedWindow("results")
+cv2.imwrite(labeled_crop_dir + 'results.png', composite)
 
-while True:
-    cv2.imshow("results",composite)
-    key = cv2.waitKey(1) & 0xFF
-    if key == ord("q"):
-        break
+# while True:
+#     cv2.imshow("results",composite)
+#     key = cv2.waitKey(1) & 0xFF
+#     if key == ord("q"):
+#         break
 
 cv2.destroyAllWindows()
