@@ -10,7 +10,9 @@ This works awesome. The first time I used this got 100% accuracy determining hea
 **To reproduce the results:**
 * Download the dataset: http://www.gemhunt.com/cents.tar
 * Run label.py to randomly label one heads and one tails coin
-* Build a caffe model (I use DIGITS) and put it in the heads_tails_model dir
+* Build a caffe model (I use DIGITS, a gray 28x28 dataset, and LeNet)
+* Download and untar the new model into ~/lighting-augmentation/heads_tails_model/
+* rename the *.caffemodel file to snapshot.caffemodel
 * Run infer.py to classify the dataset and view the results
 
 **Dataset Scanning Details:**
