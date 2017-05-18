@@ -9,7 +9,7 @@ This works awesome. The first time I used this got 100% accuracy determining hea
 
 **To reproduce the results:**
 * Download the dataset: http://www.gemhunt.com/cents.tar
-* Run label.py to label one heads and one tails coin
+* Run label.py to randomly label one heads and one tails coin
 * Build a caffe model (I use DIGITS) and put it in the heads_tails_model dir
 * Run infer.py to classify the dataset and view the results
 
@@ -22,7 +22,18 @@ The Arduino ino used is at:
 https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_and_solenoid_control/led_and_solenoid_control.ino
 A simpler version without motor and solenoid control is in this repo. 
 
-**Later Tasks:**
+**FAQ**
+* With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains more detail. 
+
+**Questions I have:**
+* How useful is this?
+* Is there a better way?
+* Who else is doing this?
+* How much better is just using 3D scanning? (This is so cheap I don't see a reason...)
+
+**Tasks:**
+* Try camera angle augmentation: Take pictures while the belt is moving.(Stero)
+* Try camera angle augmentation: Try cameras on other angles. 
 * Try 3 color channels in the LED to scan 3 angles at once. 
 
 **Back lighting Tasks:**
@@ -30,3 +41,10 @@ A simpler version without motor and solenoid control is in this repo.
 * Scan screws without an image at all:1 bit backlighting from 8 different angles would the same as 256 gray but really it should be blob input instead of an image.
 * Try training sets with parts touching.
 * In a tray configuration, an old flat panel display can be both the backlight and light up around the issue parts.
+
+
+
+
+
+
+
