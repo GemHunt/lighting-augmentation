@@ -41,7 +41,6 @@ The Arduino ino used is at:
 https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_and_solenoid_control/led_and_solenoid_control.ino
 A simpler version without motor and solenoid control is in this repo. 
 
-
 **FAQ**
 * With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains more detail. 
 
