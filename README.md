@@ -18,9 +18,8 @@ This works awesome. The first time I used this got 100% accuracy determining hea
 
 **Scanning Pipeline:**
 * The belt stops
-* 57 images of each coin are captured
-* From mostly different lighting angles  
-* HoughCircles is done on all 57 
+* 57 images of each coin are captured from mostly different lighting angles  
+* HoughCircles is done on all 57 images
 * The centers are averaged and the images are cropped down to 56x56
 * No camera calibration
 
@@ -51,9 +50,9 @@ A simpler version without motor and solenoid control is in this repo.
 * How useful is this?
 * Is there a better way?
 * Who else is doing this?
-* How much better is just using 3D scanning? (This is so cheap I don't see a reason...)
 
 **Tasks:**
+* Try other part types!!!
 * Try camera angle augmentation: Take pictures while the belt is moving.(Stero)
 * Try camera angle augmentation: Try cameras on other angles. 
 * Try 3 color channels in the LED to scan 3 angles at once. 
