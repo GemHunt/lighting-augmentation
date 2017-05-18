@@ -1,16 +1,15 @@
 import numpy as np
 import os
 import sys
-
 import cv2
+import local_dir as dir
+import time
 
 sys.path.append('/home/pkrush/caffe/python')
 import caffe
 
-
 def get_classifier(model_name, crop_size):
     model_dir = model_name + '/'
-    image_dir = 'test-images/'
     MODEL_FILE = model_dir + 'deploy.prototxt'
     PRETRAINED = model_dir + 'snapshot.caffemodel'
     meanFile = model_dir + 'mean.binaryproto'
@@ -30,6 +29,10 @@ def get_labels(model_name):
     labels = [line.rstrip('\n') for line in open(labels_file)]
     return labels
 
+def make_dir(directories):
+    for path_name in directories:
+        if not os.path.exists(path_name):
+            os.makedirs(path_name)
 
 def get_caffe_image(crop, crop_size):
     # this is how you get the image from file:
@@ -57,20 +60,15 @@ def get_composite_image(images, rows, cols):
                 composite_image[x * crop_rows:((x + 1) * crop_rows), y * crop_cols:((y + 1) * crop_cols)] = images[key]
     return composite_image
 
-
+start_time = time.time()
 crop_size = 28
-heads_tails = get_classifier("heads_tails", crop_size)
-heads_tails_labels = get_labels('heads_tails')
+heads_tails = get_classifier("heads_tails_model", crop_size)
+heads_tails_labels = get_labels('heads_tails_model')
 count = 0
-
-small_crop_dir = '/home/pkrush/cents/'
-crop_crop_dir = '/home/pkrush/cents-cropped/'
-labeled_crop_dir = '/home/pkrush/cents-labeled/'
-
 
 image_ids = []
 
-for root, dirnames, walk_filenames in os.walk(crop_crop_dir):
+for root, dirnames, walk_filenames in os.walk(dir.crop_crop):
     for filename in walk_filenames:
         if filename.endswith('.png'):
             image_id = int(filename.replace('.png', ''))
@@ -86,7 +84,7 @@ for image_id, root, filename in image_ids:
     if crop is None:
         continue
     if image_id % 100 == 54:
-        thumbnail_filename = small_crop_dir + filename
+        thumbnail_filename = dir.small_crop + filename
         thumbnail = cv2.imread(thumbnail_filename)
         if thumbnail is not None:
             thumbnails[coin_id] = thumbnail
@@ -120,18 +118,18 @@ for coin_id, coin_type, max_value in results:
         continue
     crop = thumbnails[coin_id]
     font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.putText(crop, str(max_value)[0:2], (4, 15), font, .5, (0, 200, 0), 2)
+    cv2.putText(crop, str(int(max_value)), (4, 15), font, .5, (0, 200, 0), 2)
     # cv2.putText(crop, str(coin_id), (4, 40), font, .4, (0, 255, 0), 2)
     images.append(crop)
 
 composite = get_composite_image(images, 50, 20)
 # cv2.namedWindow("results")
-cv2.imwrite(labeled_crop_dir + 'results.png', composite)
+cv2.imwrite(dir.labeled_crop + 'results.png', composite)
 
 # while True:
 #     cv2.imshow("results",composite)
-#     key = cv2.waitKey(1) & 0xFF
+#     key = cv2.waitKey(1) & 0xFFshutil
 #     if key == ord("q"):
 #         break
-
+print 'Done in %s seconds' % (time.time() - start_time,)
 cv2.destroyAllWindows()

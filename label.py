@@ -1,11 +1,11 @@
 import glob
 import numpy as np
 import os
+import shutil
 import random
 import sys
-
 import cv2
-
+import local_dir as dir
 
 def get_rotated_image(image,before_rotate_size,angle, pixels_to_jitter):
     center_x = before_rotate_size / 2 + (random.random() * pixels_to_jitter * 2) - pixels_to_jitter
@@ -58,6 +58,7 @@ def create_design_data_set(labeled_designs,design_crop_dir,image_dir,test):
 
     for label in labels:
         dir = image_dir + label + '/'
+        shutil.rmtree(dir)
         if not os.path.exists(dir):
             os.makedirs(dir)
 
@@ -90,7 +91,6 @@ def label_heads_tails(small_crop_dir, labeled_crop_dir):
     for filename in glob.iglob(small_crop_dir + '*54.png'):
         filenames.append([random.random(), filename])
         filenames.sort()
-    print coin_ids
 
     for temp_random,filename in filenames:
         coin_id = filename.replace('54.png', '')
@@ -145,13 +145,14 @@ def label_heads_tails(small_crop_dir, labeled_crop_dir):
     create_design_data_set(labeled_designs, small_crop_dir, labeled_crop_dir, test)
     cv2.destroyAllWindows()
 
-before_rotate_size = 56
-large_crop_dir = '/home/pkrush/data/cents-test/'
-small_crop_dir = '/home/pkrush/cents/'
-crop_crop_dir = '/home/pkrush/cents-cropped/'
-labeled_crop_dir = '/home/pkrush/cents-labeled/'
+shutil
+#Download: http://www.gemhunt.com/cents.tarshutilshutil
+#Untar into ~/lighting-augmentation-data/cents
 
-#total_coins is 1002 because 2 are missing images:
-# create_data_set(large_crop_dir,small_crop_dir,before_rotate_size,total_coins=1002,crop=False)
-# create_data_set(small_crop_dir,crop_crop_dir,before_rotate_size,total_coins=1000,crop=True)
-label_heads_tails(small_crop_dir, labeled_crop_dir)
+dir.make_local_dir()
+before_rotate_size = 56
+#create_data_set(dir.small_crop,dir.crop_crop,before_rotate_size,total_coins=1000,crop=True)
+
+
+label_heads_tails(dir.small_crop, dir.labeled_crop)
+shutil
