@@ -7,13 +7,14 @@ This repo is to demonstrate using Arduino controlled LED lighting to augment dee
 
 This works awesome. The first time I used this got 100% accuracy determining head vs tails on a 1000 images of different coins(same design) with no manual training. 
 
-**To reproduce the results:**
+**To reproduce the results using Nvidia DIGITS:**
 * Download the dataset: http://www.gemhunt.com/cents.tar
 * Run label.py to randomly label one heads and one tails coin
 * Build a caffe model (I use DIGITS, a gray 28x28 dataset, and LeNet)
 * Download and untar the new model into ~/lighting-augmentation/heads_tails_model/
-* rename the *.caffemodel file to snapshot.caffemodel
-* Run infer.py to classify the dataset and view the results
+* Rename the *.caffemodel file to snapshot.caffemodel
+* Run infer.py to classify the dataset
+* Open lighting-augmentation-data/cents-labeled/results.png to view the results
 
 **Dataset Scanning Details:**
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
