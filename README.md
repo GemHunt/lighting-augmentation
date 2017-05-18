@@ -14,6 +14,7 @@ Download the dataset: http://www.gemhunt.com/cents.tar
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
 The images were captured using: https://github.com/GemHunt/real-time-coin-id/blob/master/scanning.py
 Frames were captured with different lighting angles as the coin is moving stopped under the camera. Just above the coin is a 18 LED (WS2812) strip in a 50mm circle. Around the camera there are 8 more, so this makes 26 total. Every 30ms the lighting is changed. So each of these 26 lights are on one at a time, then all bottom lights, then all top lights. So 28 different lighting combinations. It's pretty sloppy as the image capture is not synced to the LED switching, but it works great! I'm guessing this works similar to using depth maps from 3D scanning into the neural network model.
+
 The Arduino ino used is at:
 https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_and_solenoid_control/led_and_solenoid_control.ino
 A simpler version without motor and solenoid control is in this repo. 
