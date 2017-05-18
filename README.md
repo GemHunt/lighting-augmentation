@@ -16,6 +16,22 @@ This works awesome. The first time I used this got 100% accuracy determining hea
 * Run infer.py to classify the dataset
 * Open lighting-augmentation-data/cents-labeled/results.png to view the results
 
+**Scanning Pipeline:**
+* The belt stops
+* 57 images of each coin are captured
+* From mostly different lighting angles  
+* HoughCircles is done on all 57 
+* The centers are averaged and the images are cropped down to 56x56
+
+**Model Creation Pipeline**
+* 2 coins are labeled(one heads, one tails) 
+* 57 x 100 = 5700 training images are created with lighting,rotation, and center jittering augmentions:
+* 56x56:  57 different lighting angles 
+* 42x42: A 42x42 square is cropped 100 random rotations 
+    with the crop center is randomly jittered in a 2x2 pixel window
+* 28x28: Resize to 28x28
+* This DataSet is trained with LeNet in DIGITS
+
 **Dataset Scanning Details:**
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
 The images were captured using: https://github.com/GemHunt/real-time-coin-id/blob/master/scanning.py
@@ -24,6 +40,7 @@ Frames were captured with different lighting angles as the coin is moving stoppe
 The Arduino ino used is at:
 https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_and_solenoid_control/led_and_solenoid_control.ino
 A simpler version without motor and solenoid control is in this repo. 
+
 
 **FAQ**
 * With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains more detail. 
