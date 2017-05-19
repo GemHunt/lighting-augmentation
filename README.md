@@ -7,6 +7,7 @@ Check out the video on YouTube
 * To demonstrate using Arduino controlled LED lighting to augment deep learning models
 * To show how this is very simple, quick, and low cost unsupervised method of grouping 3D surfaces
 * To find ways to make this process better (Feel free ask questions or comments in the Issues) 
+* To show off one of the simple building blocks off unsupervised anomaly detection
 
 With the current data set this gets 98-100% accuracy determining head vs tails on a 1000 different coins(same design) with no manual training. 
 
@@ -41,8 +42,6 @@ With the current data set this gets 98-100% accuracy determining head vs tails o
 * All 57000 images are inferred
 * The 57 results for each coin are summed
 
-
-
 **Dataset Scanning Details:**
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
 The images were captured using: https://github.com/GemHunt/real-time-coin-id/blob/master/scanning.py
@@ -59,16 +58,22 @@ https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_an
 A simpler version without motor and solenoid control is in this repo. 
 
 **FAQ**
-* With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains more detail. 
+* With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains much more detail. 
+* Your demo is One-Shot, not unsupervised? True, if you add a few more steps in software it would be unsupervised. I wanted to keep the demo as simple as possible.
+
 
 **Questions I have:**
+* What do you want to use this for?
 * How useful is this?
 * Is there a better way?
 * Who else is doing this?
 
+
 **Tasks:**
 * Try other part types!!!
-* Try camera angle augmentation: Take pictures while the belt is moving.(Stero)
+* How much does the lighting-augmentation add? Try running without it. 
+* Try rotating the coin instead (I am sure it will work the same, but it's 
+* Try camera angle augmentation: Take pictures while the belt is moving(Stereo)(This works great too, but I need to set up better center finding to get it work better.) 
 * Try camera angle augmentation: Try cameras on other angles. 
 * Try 3 color channels in the LED to scan 3 angles at once. 
 
@@ -79,7 +84,10 @@ A simpler version without motor and solenoid control is in this repo.
 * In a tray configuration, an old flat panel display can be both the backlight and light up around the issue parts.
 
 
-
+**Thanks Again for the Questions & Comments!**
+* Paul Krush
+* Carol Stream, IL, USA
+* pkrush@gemhunt.com
 
 
 
