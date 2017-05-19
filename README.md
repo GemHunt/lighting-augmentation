@@ -6,7 +6,7 @@ Check out the video on YouTube
 **Repo Goals**
 * To demonstrate using Arduino controlled LED lighting to augment deep learning models
 * To show how this is very simple, quick, and low cost unsupervised method of grouping 3D surfaces
-* To find ways to make this process better
+* To find ways to make this process better (Feel free ask questions or comments in the Issues) 
 
 With the current data set this gets 98-100% accuracy determining head vs tails on a 1000 different coins(same design) with no manual training. 
 
@@ -27,14 +27,21 @@ With the current data set this gets 98-100% accuracy determining head vs tails o
 * No camera calibration
 * ![gif](https://github.com/GemHunt/lighting-augmentation/blob/master/1100.gif "gif")
 
-**DataSet Creation Pipeline**
+**Training Data Set Creation Pipeline**
 * 2 coins are labeled(one heads, one tails) 
-* 57 x 100 = 5700 training images are created with lighting,rotation, and center jittering augmentions:
+* 57 x 100 = 5700 training images are created with lighting, rotation, and center jittering augmentations
 * 56x56:  57 different lighting angles 
 * 42x42: A 42x42 square is cropped 100 random rotations 
     with the crop center is randomly jittered in a 2x2 pixel window
 * 28x28: Resize to 28x28
 * ![training-data](https://github.com/GemHunt/lighting-augmentation/blob/master/training-data.png "training-data")
+
+**Inference Pipeline**
+* A model is created from this training data set
+* All 57000 images are inferred
+* The 57 results for each coin are summed
+
+
 
 **Dataset Scanning Details:**
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
