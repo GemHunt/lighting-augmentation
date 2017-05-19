@@ -3,9 +3,12 @@ Arduino controlled LED lighting to augment deep learning models
 
 Check out the video on YouTube
 
-This repo is to demonstrate using Arduino controlled LED lighting to augment deep learning models. 
+**Repo Goals**
+* To demonstrate using Arduino controlled LED lighting to augment deep learning models
+* To show how this is very simple, quick, and low cost unsupervised method of grouping 3D surfaces
+* To find ways to make this process better
 
-This works awesome. The first time I used this got 100% accuracy determining head vs tails on a 1000 images of different coins(same design) with no manual training. 
+With the current data set this gets 98-100% accuracy determining head vs tails on a 1000 different coins(same design) with no manual training. 
 
 **To reproduce the results using Nvidia DIGITS:**
 * Download the dataset: http://www.gemhunt.com/cents.tar
@@ -22,24 +25,29 @@ This works awesome. The first time I used this got 100% accuracy determining hea
 * HoughCircles is done on all 57 images
 * The centers are averaged and the images are cropped down to 56x56
 * No camera calibration
+* ![gif](https://github.com/GemHunt/lighting-augmentation/blob/master/1100.gif "gif")
 
-**Model Creation Pipeline**
+**DataSet Creation Pipeline**
 * 2 coins are labeled(one heads, one tails) 
 * 57 x 100 = 5700 training images are created with lighting,rotation, and center jittering augmentions:
 * 56x56:  57 different lighting angles 
 * 42x42: A 42x42 square is cropped 100 random rotations 
     with the crop center is randomly jittered in a 2x2 pixel window
 * 28x28: Resize to 28x28
-* This DataSet is trained with LeNet in DIGITS
+* ![training-data](https://github.com/GemHunt/lighting-augmentation/blob/master/training-data.png "training-data")
 
 **Dataset Scanning Details:**
 (57,000 images, 56x56 PNG files, 342MB Total, 1000 coins each with 57 different lighting angles)
 The images were captured using: https://github.com/GemHunt/real-time-coin-id/blob/master/scanning.py
 Frames were captured with different lighting angles as the coin is moving stopped under the camera. Just above the coin is a 18 LED (WS2812) strip in a 50mm circle. Around the camera there are 8 more, so this makes 26 total. Every 30ms the lighting is changed. So each of these 26 lights are on one at a time, then all bottom lights, then all top lights. So 28 different lighting combinations. It's pretty sloppy as the image capture is not synced to the LED switching, but it works great! I'm guessing this works similar to using depth maps from 3D scanning into the neural network model.
 
-Ignored in this repo: There are 2 cameras that scan each side of the coin. (Even ID) is the opposite side of (Even ID) + 3. For example 124 is the opposite side of 127. 
+**Ignored in this repo:**
+* There are 2 cameras that scan each side of the coin.
+* (Even ID) is the opposite side of (Even ID) + 3. 
+* For example 124 is the opposite side of 127. 
+* So really this is a data set of 500 coins with 2 images per coin. 
 
-The Arduino ino used is at:
+**The Arduino ino used is at:**
 https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/led_and_solenoid_control/led_and_solenoid_control.ino
 A simpler version without motor and solenoid control is in this repo. 
 
