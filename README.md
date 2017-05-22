@@ -5,11 +5,12 @@ Check out the video on YouTube:
 
 [![Check out the video](https://github.com/GemHunt/lighting-augmentation/blob/master/youtube.jpg)](https://www.youtube.com/watch?v=cwcn3tuXrv4)
 
-**Repo Goals**
-* To demonstrate using Arduino controlled LED lighting to augment deep learning models
-* To show how this is simple, quick, and low cost unsupervised method of grouping 3D surfaces
-* To find ways to make this process better (Feel free ask questions or comments in the Issues) 
-* To show off one of the simple building blocks off unsupervised anomaly detection
+**GitHub Repo Goals**
+* Done: Show getting 100% accuracy on head vs tails on a 1000 coins with no manual labeling!
+* Done: To demonstrate using Arduino controlled LED lighting to augment deep learning models
+* Done: To demo this simple, quick, and low cost unsupervised method of grouping 3D surfaces
+* Done: To show off a simple building block of unsupervised anomaly detection for machine vision
+* To find ways to make this process better (Feel free ask questions or comments in the issues) 
 
 With the current data set this gets 98-100% accuracy determining head vs tails on a 1000 different coins(same design) with no manual training. 
 
