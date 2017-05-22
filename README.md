@@ -1,11 +1,13 @@
 # lighting-augmentation
 Arduino controlled LED lighting to augment deep learning models
 
-Check out the video on YouTube
+Check out the video on YouTube:
+
+[![Check out the video](https://github.com/GemHunt/lighting-augmentation/blob/master/youtube.jpg)](https://youtu.be/cwcn3tuXrv4)
 
 **Repo Goals**
 * To demonstrate using Arduino controlled LED lighting to augment deep learning models
-* To show how this is very simple, quick, and low cost unsupervised method of grouping 3D surfaces
+* To show how this is simple, quick, and low cost unsupervised method of grouping 3D surfaces
 * To find ways to make this process better (Feel free ask questions or comments in the Issues) 
 * To show off one of the simple building blocks off unsupervised anomaly detection
 
@@ -60,19 +62,17 @@ A simpler version without motor and solenoid control is in this repo.
 **FAQ**
 * With the correct lighting can't you just use template matching? Yes, but this is more quick, robust, and retains much more detail. 
 * Your demo is One-Shot, not unsupervised? True, if you add a few more steps in software it would be unsupervised. I wanted to keep the demo as simple as possible.
+* What's with the number 57? There is nothing special about the number "57"
 
-
-**Questions I have:**
+**Questions I(Paul) have for you:**
 * What do you want to use this for?
 * How useful is this?
 * Is there a better way?
 * Who else is doing this?
 
-
 **Tasks:**
 * Try other part types!!!
 * How much does the lighting-augmentation add? Try running without it. 
-* Try rotating the coin instead (I am sure it will work the same, but it's 
 * Try camera angle augmentation: Take pictures while the belt is moving(Stereo)(This works great too, but I need to set up better center finding to get it work better.) 
 * Try camera angle augmentation: Try cameras on other angles. 
 * Try 3 color channels in the LED to scan 3 angles at once. 
