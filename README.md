@@ -3,7 +3,7 @@ Arduino controlled LED lighting to augment deep learning models
 
 Check out the video on YouTube:
 
-[![Check out the video](https://github.com/GemHunt/lighting-augmentation/blob/master/youtube.jpg)](https://youtu.be/cwcn3tuXrv4)
+[![Check out the video](https://github.com/GemHunt/lighting-augmentation/blob/master/youtube.jpg)](https://www.youtube.com/watch?v=cwcn3tuXrv4)
 
 **Repo Goals**
 * To demonstrate using Arduino controlled LED lighting to augment deep learning models
