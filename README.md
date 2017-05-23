@@ -79,10 +79,14 @@ A simpler version without motor and solenoid control is in this repo.
 * Try 3 color channels in the LED to scan 3 angles at once. 
 
 **Back lighting Tasks:**
+* If you keep the belt running and have different camera angles this will be like a 2 3/4D scan because you will be seeing under the part.
 * Add backlighting to the image set. Using the LED strips under the belt makes for a very clean outline of more complex parts. 
 * Scan screws without an image at all:1 bit backlighting from 8 different angles would the same as 256 gray but really it should be blob input instead of an image.
 * Try training sets with parts touching.
 * In a tray configuration, an old flat panel display can be both the backlight and light up around the issue parts.
+
+** Watch the video again after 3 months and add in note & error annotations: **
+* “5700 images for each class” (not total) 
 
 
 **Thanks Again for the Questions & Comments!**
